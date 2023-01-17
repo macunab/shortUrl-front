@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { ReduceService } from '../../services/reduce.service';
 
 @Component({
   selector: 'app-reduce',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReduceComponent implements OnInit {
 
-  constructor() { }
+  originalUrl: string = '';
+
+  constructor(private reduceService: ReduceService) { }
 
   ngOnInit(): void {
+  }
+
+  reduceUrl() {
+    if(!this.originalUrl) {
+      Swal.fire({
+        title: 'Ingrese una URL',
+        icon: 'info'
+      })
+    }
+    console.log(`La URL ha reducir es: ${ this.originalUrl }`);
+    //here make the reduce for the url with the reduce service...
   }
 
 }
