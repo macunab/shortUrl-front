@@ -9,12 +9,14 @@ import { FormsModule } from '@angular/forms';
 import { ReduceComponent } from './components/reduce/reduce.component';
 import { PrimengModule } from './primeng/primeng.module';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { RedirectComponent } from './components/redirect/redirect.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReduceComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    RedirectComponent
   ],
   imports: [
     BrowserModule,
