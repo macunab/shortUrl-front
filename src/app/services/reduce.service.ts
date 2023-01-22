@@ -13,14 +13,12 @@ export class ReduceService {
   constructor(private http: HttpClient) { }
 
   generateShortUrl(originalURL: string) {
-    const url: string = `${this.baseUrl}/api/reduce`; 
+    const url: string = `${this.baseUrl}/reduce`; 
     return this.http.post(url, {originalURL});
   }
 
   getOriginalURL(shortUrl: string) {
-    const url: string = `${ this.baseUrl }/api/reduce`;
-    const params: HttpParams = new HttpParams();
-    params.append('url-short', shortUrl);
-    return this.http.get<ServerResponse>(url, { params });
+    const url: string = `${ this.baseUrl }/reduce/${ shortUrl }`;
+    return this.http.get<ServerResponse>(url);
   }
 }

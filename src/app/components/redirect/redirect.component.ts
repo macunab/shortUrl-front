@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ReduceService } from 'src/app/services/reduce.service';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-redirect',
@@ -9,10 +10,16 @@ import { ReduceService } from 'src/app/services/reduce.service';
 })
 export class RedirectComponent implements OnInit {
 
-  constructor(private reduceService: ReduceService, private router: Router) { }
+  id: string = '';
+
+  constructor(private reduceService: ReduceService,
+      private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.reduceService.getOriginalURL('')
+    this.id = this.route.snapshot.paramMap.get('id')!;
+    console.log(`EL PARAM ID ES: ${ this.id }`);
+    this.reduceService.getOriginalURL(this.id)
+      .pipe(delay(2000))
       .subscribe( resp => {
         console.log(resp.ok)
         if(resp.ok) {
@@ -22,7 +29,8 @@ export class RedirectComponent implements OnInit {
   }
 
   redirectUrl(url: string) {
-    this.router.navigateByUrl(url);
+    console.log(url);
+    window.location.href = url;
   }
 
 }
