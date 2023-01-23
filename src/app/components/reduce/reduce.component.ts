@@ -10,6 +10,8 @@ import { ReduceService } from '../../services/reduce.service';
 export class ReduceComponent implements OnInit {
 
   originalUrl: string = '';
+  baseUrl: string = 'http://localhost:4200/';
+  shortUrl: string = '';
 
   constructor(private reduceService: ReduceService) { }
 
@@ -25,6 +27,17 @@ export class ReduceComponent implements OnInit {
     }
     console.log(`La URL ha reducir es: ${ this.originalUrl }`);
     //here make the reduce for the url with the reduce service...
+    this.reduceService.generateShortUrl(this.originalUrl)
+      .subscribe( resp => {
+        if(resp.ok) {
+          this.shortUrl = `${this.baseUrl}${resp.originalUrl}`;
+        } else {
+          Swal.fire({
+            title: 'An unexpected error occurred, wait a moment and try again',
+            icon: 'error'
+          })
+        }
+      });
   }
 
 }

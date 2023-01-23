@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReduceService } from 'src/app/services/reduce.service';
 import { delay } from 'rxjs';
 
@@ -13,17 +13,19 @@ export class RedirectComponent implements OnInit {
   id: string = '';
 
   constructor(private reduceService: ReduceService,
+      private router: Router,
       private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id')!;
-    console.log(`EL PARAM ID ES: ${ this.id }`);
     this.reduceService.getOriginalURL(this.id)
-      .pipe(delay(2000))
+      .pipe(delay(1000))
       .subscribe( resp => {
-        console.log(resp.ok)
         if(resp.ok) {
           this.redirectUrl(resp.originalUrl!);
+        } else {
+          console.info('The url dont exist in db');
+          this.router.navigateByUrl('home');
         }
       })
   }

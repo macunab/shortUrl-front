@@ -13,6 +13,10 @@ const routes: Routes = [
     component: RedirectComponent
   },
   {
+    path: ':id',
+    component: RedirectComponent
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }
